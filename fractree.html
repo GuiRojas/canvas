@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Treeeeeeeeeee</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html, body{
+			overflow: hidden;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#myCanvas{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+	</style>
+	<script type="text/javascript">        
+        
+		var canvas;
+		var ctx; 
+        
+        var lv;
+        
+    	function iniciar(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+            
+            canvas.width = canvas.getBoundingClientRect().width;
+            canvas.height = canvas.getBoundingClientRect().height;
+            
+            ctx.translate(canvas.width/2,canvas.height/2);   
+            
+			draw(0, 0, 0, canvas.height/10);
+		}
+
+		function draw(level, ondeX, ondeY, size){
+			if(level==10)
+				return;
+
+			ctx.rotate(level*10*Math.PI/180);
+			
+			ctx.beginPath();
+            ctx.moveTo(ondeX,ondeY);
+            ctx.lineTo(ondeX,ondeY-size);
+            ctx.lineWidth = 10-level; 
+            ctx.strokeStyle = '#000000';
+            ctx.stroke(); 
+
+            draw(level+1,ondeX,ondeY-size,size);
+		}
+
+	</script>
+</head>
+<body onload="iniciar()">
+	<canvas id="myCanvas" style="background-color: white"></canvas>
+</body>
+</html>

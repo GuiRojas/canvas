@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas</title>
+	<meta charset="utf-8">
+    <style type="text/css">
+        html, body{
+			overflow: hidden;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#meuCanvas{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+    </style>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+
+		var objCanvas=null;
+		var objContexto=null;
+
+		var p1y,p2y;
+		var bx ,bx ;
+		var bxp,byp;
+		var p1s,p2s;
+
+		function iniciar(){
+			c   = document.getElementById("meuCanvas");
+			ctx = c.getContext("2d");
+
+            c.width = c.getBoundingClientRect().width;
+            c.height = c.getBoundingClientRect().height;
+            
+			h=parseInt(document.getElementById("meuCanvas").getAttribute("height"));
+    		w=parseInt(document.getElementById("meuCanvas").getAttribute("width"));
+
+    		p1y = (h/2)*1.1;
+    		p2y = h/2;
+			
+			reset();
+			atualizarTela();
+		}
+
+		var sz = 180;
+
+		var FPS = 120;
+		setInterval(function() {
+  		atualizarTela();
+		}, 1000/FPS);
+
+		function reset(){
+			bx=w/2;
+			by=h/2;		
+
+			bxp = parseInt((Math.random()*10)%3) * 2;
+			byp = parseInt((Math.random()*10)%3) * 2;
+			if(bxp<=1){
+				bxp = 2;
+			}
+			if(byp<=1){
+				byp = 2;
+			}
+
+			var idk = parseInt((Math.random()*10)%10) * 2;
+			var ikd = parseInt((Math.random()*10)%10) * 2;
+			if(idk>5){
+				bxp= -bxp;
+			}
+			if(ikd>5){
+				byp= -byp;
+			}
+
+			p1s = parseInt((Math.random()*10)%3) * 2;
+			p2s = parseInt((Math.random()*10)%3) * 2;
+			if(p1s == p2s){
+				p2s *= 1.05;
+			}else if(p1s>p2s){
+				p2s *= 1.5
+			}else{
+				p1s *= 1.5;
+			}
+			if(p1s<=1){
+				p1s = 2;
+			}
+			if(p2s<=1){
+				p2s = 2;
+			}
+		
+		}
+
+		function atualizarTela(){ 
+			ctx.rect(0,0,w,h);   		
+    		ctx.fillStyle= "#000000";
+    		ctx.fill();   		
+
+			ctx.beginPath();
+			ctx.rect(0, p1y-90, 20, sz);
+			ctx.rect(w-20, p2y-90, 20, sz);
+			ctx.rect(bx-10,by-10,20,20);
+			ctx.fillStyle = "#969696";
+			ctx.fill();
+
+			bx+=bxp;
+			by+=byp;
+
+			if(bx>w-30){
+				if(by+10>p2y-(sz/2) && by-10<p2y+(sz/2)){
+					bip();
+				}else{
+					reset();
+				}
+			}
+			if(bx<30){
+				if(by+10>p1y-(sz/2) && by-10<p1y+(sz/2)){
+					bip();
+				}else{
+					reset();
+				}
+			}
+			if(by<10 || by+10>h){
+				bop();
+			}
+
+			move();
+		}
+
+		function bip(){
+			bxp*= -1.1;
+			p1s*= 1.15;
+			p2s*= 1.2;
+		}
+
+		function bop(){
+			byp*= -1.1;
+		}
+
+		function move(){
+			if(by+10>p2y && p2y+(sz/2)<h){
+				p2y+=p2s;
+			}else
+			if(by-10<p2y && p2y-(sz/2)>0){
+				p2y-=p2s*0.8;
+			}
+			if(by+10>p1y && p1y<h-(sz/2)){
+				p1y+=p1s;
+			}else
+			if(by-10<p1y && p1y>(sz/2)){
+				p1y-= p1s*0.8;
+			}
+		}
+
+	-->
+	</script>
+</head>
+<body onload="iniciar()">
+	<canvas id="meuCanvas">
+		Seu browser não suporta o elemento CANVAS, atualize-se!!!		
+	</canvas>
+	<br>
+
+</body>
+</html>

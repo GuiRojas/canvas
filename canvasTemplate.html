@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html, body{
+			overflow: hidden;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#myCanvas{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+	</style>
+	<script type="text/javascript">        
+        
+		var canvas;
+		var ctx; 
+        
+        var FPS;
+        
+        
+    	function iniciar(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+            
+            FPS = 60;
+
+            //canvas.width = canvas.getBoundingClientRect().width;
+            //canvas.height = canvas.getBoundingClientRect().height;
+            
+			setInterval(draw, 1000/FPS);
+		}
+
+		function draw(){
+            
+		}		
+
+	</script>
+</head>
+<body onload="iniciar()">
+	<canvas id="myCanvas" style="background-color: black"></canvas>
+</body>
+</html>

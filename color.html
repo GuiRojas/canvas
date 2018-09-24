@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html, body{
+			overflow: hidden;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#myCanvas{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+	</style>
+	<script type="text/javascript">        
+        
+		var canvas;
+		var ctx;
+        var inc;
+		
+		var pastel;
+
+		var cn;
+		var wd;
+
+        var size;
+        
+        function makeColorGradient(offset, frequency1, frequency2, frequency3,
+                             phase1, phase2, phase3,
+                             center, width, len)
+        {
+            if (center == undefined)   center = 128;
+            if (width  == undefined)   width  = 127;
+            if (len    == undefined)   len    = 1000;
+
+
+            if(cn!=0)
+            	center = cn;
+            if(wd!=0)
+            	width = wd;
+			else if(pastel){
+            	center = 220;
+            	width = 55;
+            }	
+            
+
+            for (var i = 0; i < len; ++i)
+            {
+                var red = Math.sin(frequency1*i + phase1) * width + center;
+                var grn = Math.sin(frequency2*i + phase2) * width + center;
+                var blu = Math.sin(frequency3*i + phase3) * width + center;
+                
+                
+                ctx.beginPath();
+                ctx.fillStyle = 'rgb('+red+','+grn+','+blu+',255)';
+                ctx.fillRect((i-offset+inc-20) * size, offset * size, size, size);
+               //document.write( '<font color="' + RGB2Color(red,grn,blu) + '">&#9608;</font>');
+            }
+        }
+        
+        function RGB2Color(r,g,b)
+        {
+            return 'rgb(' + Math.round(r) + ',' + Math.round(g) + ',' + Math.round(b) + ')';
+        }
+        
+    	function iniciar(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+
+            canvas.width = canvas.getBoundingClientRect().width;
+            canvas.height = canvas.getBoundingClientRect().height;
+            
+            pastel = false;
+            cn = 0;
+            wd = 0;
+
+
+			setup(); 
+			setInterval(draw, 0);
+		}
+
+        function setup(){
+            size = 40;              
+            inc = 0;
+            console.log("Mude o tamanho do quadrado usando size = x");
+            console.log("O padrão é 40   (Recomendo 80)");
+            console.log("Você também pode mudar umas coisinhas modificando o 'wd' e o 'cn'");
+            console.log("por padrão eles ficam 128 e 127");
+            console.log("Você também pode habilitar o modo pastel com 'pastel=true'");
+        }
+
+		function draw(){
+			for (var i = 0; i <= canvas.height/ size; i++) {
+	            makeColorGradient(i,.3,.3,.3,0,2,4);
+			}
+			inc++;
+			if(inc>=20)
+				inc = 0;
+		}		
+
+	</script>
+</head>
+<body onload="iniciar()">
+	<canvas id="myCanvas" style="background-color: black"></canvas>
+</body>
+</html>
